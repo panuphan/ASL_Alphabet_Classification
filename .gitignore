@@ -1,4 +1,7 @@
 
+*.zip
+/model
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -123,15 +126,27 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-.vscode/
-
-data/input/
-
-model/
-
-code/_.py
-
-code/t.txt
-
-screenshots/
+
+
+.vscode/
+
+
+
+data/input/
+
+
+
+model/
+
+
+
+code/_.py
+
+
+
+code/t.txt
+
+
+
+screenshots/
+
