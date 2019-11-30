@@ -62,9 +62,9 @@ def img_processing(path):
     
     return skin
 
-def read_image(image_path):
+def read_image(image_path,preprocess=True):
     imageSize=64
-    img_file = img_processing(image_path)
+    img_file = img_processing(image_path) if preprocess else cv2.imread(image_path)
     if img_file is not None:
         img_file = skimage.transform.resize(
             img_file, (imageSize, imageSize, 3))
@@ -103,11 +103,47 @@ def read_label(prediction):
 
 #**** EXAMPLE TO USE ****
 model, train_log = reload_model() 
-test_path = 'data/input/pred/B/B1.jpg'
+test_path = 'data/input/NewData/pred/I/I1.jpg'
 img = read_image(test_path)
 predictions = model.predict(img)
-print('predictions:', read_label(predictions))
+print('predict:', read_label(predictions))
+#************************
 
+#%%
+test_path = 'data/input/NewData/pred/R/R1.jpg'
+img = read_image(test_path)
+predictions = model.predict(img)
+print('predict:', read_label(predictions))
+# %%
+import os
+def segmentation(traget_folder_path='data/input/NewData/pred/',save_folder_path='data/input/NewData/segment/'):
+    folder=traget_folder_path
+    folder_save=save_folder_path
+    for foldername in os.listdir(folder): 
+        for filename in os.listdir(folder+foldername):
+            # print(folder+foldername+'/'+filename)
+            test_path = folder+foldername+'/'+filename
+            save_foldername = folder_save+foldername
+            save_img_path=save_foldername+'/seg-'+filename
+            if not os.path.exists(save_foldername): os.mkdir(save_foldername)
+            img = img_processing(test_path)
+            cv2.imwrite(save_img_path,img)
+    print("Segmentation Done!!")
+# %%
+def predict_to_folder(traget_folder_path='data/input/NewData/pred/',preprocess=True):
+    folder=traget_folder_path
 
+    for foldername in os.listdir(folder): 
+        for filename in os.listdir(folder+foldername):
+            # print(folder+foldername+'/'+filename)
 
+            test_path = folder+foldername+'/'+filename
+            img = read_image(test_path,preprocess=preprocess)
+            predictions = model.predict(img)
+            pred =read_label(predictions)
+            print(f'(predict,actual): ({pred},{foldername})')
+            if pred == foldername:
+                print("Right!!")
+
+predict_to_folder(preprocess=True)
 # %%
