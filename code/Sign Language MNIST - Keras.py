@@ -69,12 +69,53 @@ test_images, test_labels = read_data(test_data_path)
 model = creat_model()
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-history = model.fit(train_images,train_labels,batch_size=32,epochs=20,verbose=2)
+history = model.fit(train_images,train_labels,batch_size=32,epochs=10,verbose=2)
 
 # %%
 history.params
 
 # %%
-print("555")
+# y_pred =model.predict(test_images,test_labels)
+score = model.evaluate(test_images, test_labels, verbose=0)
+score
 
+# %%
+def prediction(pred):
+    return(chr(pred+ 65))
+
+# def keras_predict(model, image):
+#     data = np.asarray( image, dtype="int32" )
+#     pred_probab = model.predict(data)[0]
+#     pred_class = list(pred_probab).index(max(pred_probab))
+#     # return max(pred_probab), pred_class
+#     return prediction(pred_class)
+
+def preprocessing(img):
+    # im2 = crop_image(image_frame, 300,300,300,300)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    blur = cv2.GaussianBlur(gray, (15,15), 0)
+    img = cv2.resize(blur, (28,28), interpolation = cv2.INTER_AREA)
+    # img = np.resize(img, (28, 28, 1))
+    # img = np.expand_dims(img, axis=0)
+    # img = np.array(img)
+    img = img.reshape((-1,28,28))
+    img = np.expand_dims(img, axis=-1)
+    return img.astype(np.float32)
+
+img = cv2.imread('data\input\\test\\1.png')
+img_pre = preprocessing(img)
+y_pred = model.predict(img_pre)
+y_pred = np.argmax(y_pred,axis=1)
+# prediction(y_pred)
+plt.imshow(np.squeeze(img_pre[0], axis=-1), cmap='binary')
+plt.show()
+print("5")
+# test_images.shape
+# img_pre[0]
+# from sklearn.metrics import accuracy_score
+# y_pred = model.predict(test_images)
+# y_pred= np.argmax(y_pred,axis=1)
+# # print(f'acc: {accuracy_score(test_labels,y_pred)}')
+# y_pred
 # %%
