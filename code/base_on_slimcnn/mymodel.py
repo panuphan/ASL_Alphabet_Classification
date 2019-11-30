@@ -73,15 +73,15 @@ def read_label(prediction):
     return CLASSES[(np.argmax(prediction, axis=1))[0]]
 
 
+#%%
+""" 
 #**** EXAMPLE TO USE ****
 model, train_log = reload_model() 
-#%%
-
 test_path = 'data/input/pred/B/B1.jpg'
 img = read_image(test_path)
 predictions = model.predict(img)
 print('predictions:', read_label(predictions))
 
-
+ """
 
 # %%
