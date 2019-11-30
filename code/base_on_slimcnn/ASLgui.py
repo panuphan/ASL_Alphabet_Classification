@@ -31,6 +31,7 @@ bg = canvas.create_image(0, 0, anchor=tk.NW, image=img)
 
 def browsefile():
     global selectedpic
+    global new_window
     new_window = Toplevel(root)
     new_window.title("Choosen Image")
     selectedpic=filedialog.askopenfilename(filetypes=[("Image File",'.jpg')])
@@ -55,27 +56,42 @@ def browsefile():
 
 def openwebMethod1():
     global selectedpic
+    global new_window
     # print(f"selectedpic: {selectedpic}")
     
     img = read_image(selectedpic)
     predictions = model_1.predict(img)
-    print('[MODEL_01] predictions:', read_label(predictions))
+    pred=read_label(predictions)
+    # print('[MODEL_01] predictions:', pred)    
+    result1 = Text(new_window,width= 50, height=3)
+    result1.pack()
+    result1.insert(tk.END, "             slimcnn - Predict result :   "+pred+"  \n")
 
 def openwebMethod2():
     global selectedpic
+    global new_window
     # print(f"selectedpic: {selectedpic}")
     
     img = read_image(selectedpic)
     predictions = model_2.predict(img)
-    print('[MODEL_02] predictions:', read_label(predictions))
+    pred=read_label(predictions)
+    # print('[MODEL_02] predictions:', pred)    
+    result1 = Text(new_window,width= 50, height=3)
+    result1.pack()
+    result1.insert(tk.END, "             AlexNet - Predict result :   "+pred+"  \n")
 
 def openwebMethod3():
     global selectedpic
+    global new_window
     # print(f"selectedpic: {selectedpic}")
     
     img = read_image(selectedpic)
     predictions = model_3.predict(img)
-    print('[MODEL_03] predictions:', read_label(predictions))
+    pred=read_label(predictions)
+    # print('[MODEL_03] predictions:', pred)    
+    result1 = Text(new_window,width= 50, height=3)
+    result1.pack()
+    result1.insert(tk.END, "             VGG16 - Predict result :   "+pred+"  \n")
 
 # def method1(selectedpic):
 #     filemethod1 = filedialog.askopenfile(initialdir=os.getcwd,title = "Select file",filetypes = (("all files","*.*")))

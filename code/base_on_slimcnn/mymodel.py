@@ -102,11 +102,11 @@ def read_label(prediction):
 #%%
 
 #**** EXAMPLE TO USE ****
-model, train_log = reload_model() 
-test_path = 'data/input/NewData/pred/I/I1.jpg'
-img = read_image(test_path)
-predictions = model.predict(img)
-print('predict:', read_label(predictions))
+# model, train_log = reload_model() 
+# test_path = 'data/input/NewData/pred/I/I1.jpg'
+# img = read_image(test_path)
+# predictions = model.predict(img)
+# print('predict:', read_label(predictions))
 #************************
 
 #%%
@@ -145,5 +145,5 @@ def predict_to_folder(traget_folder_path='data/input/NewData/pred/',preprocess=T
             if pred == foldername:
                 print("Right!!")
 
-predict_to_folder(preprocess=True)
+# predict_to_folder(preprocess=True)
 # %%
